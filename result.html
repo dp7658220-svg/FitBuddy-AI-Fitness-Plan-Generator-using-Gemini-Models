@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Plan - FitBuddy</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  {% if error %}
+  <div class="card">
+    <div class="error">{{ error }}</div>
+    <a class="nav-link" href="/">← Back to home</a>
+  </div>
+  {% else %}
+
+  <div class="card">
+    <h1>FitBuddy</h1>
+    <p class="subtitle">Here's your personalized plan, {{ username }}.</p>
+
+    {% if feedback_submitted %}
+    <div class="confirmation">Your plan has been updated based on your feedback.</div>
+    {% endif %}
+
+    <div class="user-summary">
+      <div><span class="label">Name:</span> {{ username }}</div>
+      <div><span class="label">User ID:</span> {{ user_id }}</div>
+      <div><span class="label">Age:</span> {{ age }}</div>
+      <div><span class="label">Weight:</span> {{ weight }} kg</div>
+      <div><span class="label">Goal:</span> <span class="badge">{{ goal }}</span></div>
+      <div><span class="label">Intensity:</span> <span class="badge">{{ intensity }}</span></div>
+    </div>
+
+    <div class="section-title">7-Day Workout Plan</div>
+    <div class="plan-block">{{ workout_plan }}</div>
+
+    {% if updated_plan %}
+    <div class="section-title">Updated Plan (based on your feedback)</div>
+    <div class="plan-block">{{ updated_plan }}</div>
+    {% endif %}
+
+    <div class="section-title">Nutrition Tip</div>
+    <div class="plan-block">{{ nutrition_tip }}</div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="margin-top:0;">Give Feedback</div>
+    <p class="subtitle" style="text-align:left; margin-bottom:1rem;">
+      Not quite right? Tell us what to change (e.g. "Add yoga", "Include more cardio").
+    </p>
+    <form action="/submit-feedback" method="post">
+      <input type="hidden" name="user_id" value="{{ user_id }}">
+      <div>
+        <label for="feedback">Feedback</label>
+        <textarea id="feedback" name="feedback" rows="3" required></textarea>
+      </div>
+      <button type="submit">Update Plan</button>
+    </form>
+  </div>
+
+  <a class="nav-link" href="/">← Generate another plan</a>
+  {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Users - FitBuddy Admin</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="card" style="max-width: 1000px;">
+    <h1>All Users</h1>
+    <p class="subtitle">Admin view — every registered user and their plan history.</p>
+
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>User ID</th>
+            <th>Age</th>
+            <th>Weight</th>
+            <th>Goal</th>
+            <th>Intensity</th>
+            <th>Original Plan</th>
+            <th>Updated Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.weight }} kg</td>
+            <td><span class="badge">{{ user.goal }}</span></td>
+            <td><span class="badge">{{ user.intensity }}</span></td>
+            <td style="white-space:pre-wrap; max-width:280px;">{{ user.workout_plan }}</td>
+            <td style="white-space:pre-wrap; max-width:280px;">{{ user.updated_plan or "—" }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8">No users yet. Generate a plan from the home page first.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <a class="nav-link" href="/">← Back to home</a>
+</body>
+</html>
